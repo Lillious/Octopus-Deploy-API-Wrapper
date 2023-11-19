@@ -3,5 +3,5 @@ An Octopus Deploy REST API wrapper written in TypeScript
 
 Usage:
 ```
-import { Octopus } from "./modules/octopus_wrapper";
+import { Octopus } from "./index";
 ```
