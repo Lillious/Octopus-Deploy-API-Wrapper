@@ -67,21 +67,50 @@ export const Octopus = {
         },
     },
 
+    Space: {
+        List: async function () {
+            return await client.get("/spaces/all");
+        },
+    },
+
     Deployment: {
         List: async function () {
             return await client.get("/deployments");
         },
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/deployments/${id}`);
+        }
+    },
+
+    DeploymentProcess: {
+        List: async function () {
+            return await client.get("/deploymentprocesses");
+        },
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/deploymentprocesses/${id}`);
+        },
+        Template: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/deploymentprocesses/${id}/template`);
+        }
     },
 
     DeploymentTarget: {
         List: async function () {
             return await client.get("/machines");
         },
-        FindByName: async function (name: string) {
-            return await client.get(`/machines/all?name=${name}`);
-        },
-        FindById: async function (id: string) {
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
             return await client.get(`/machines/${id}`);
+        }
+    },
+
+    Task: {
+        List: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/machines/${id}/tasks`);
         }
     },
 
@@ -89,18 +118,30 @@ export const Octopus = {
         List: async function () {
             return await client.get("/environments");
         },
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/environments/${id}`);
+        }
     },
 
     Event: {
         List: async function () {
             return await client.get("/events");
         },
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/events/${id}`);
+        }
     },
 
     Feed: {
         List: async function () {
             return await client.get("/feeds");
         },
+        Find: async function (id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/feeds/${id}`);
+        }
     },
 
     Connection: {
