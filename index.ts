@@ -59,7 +59,7 @@ class Client {
 
 const client = new Client(API_KEY, API_URL);
 
-export const Octopus = {
+const Octopus = {
 
     Account: {
         List: async function () {
@@ -146,7 +146,10 @@ export const Octopus = {
 
     Connection: {
         Check: async function (id: string) {
+            if (!id) throw new Error("id is required");
             return await client.get(`/machines/${id}/connection`);
         }
     }
 }
+
+export default Octopus;
