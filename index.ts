@@ -151,8 +151,8 @@ const Octopus = {
     },
 
     Environment: {
-        List: async function (space: string, environment: string) {
-            return await client.get(`/${space}/environments/${environment}`);
+        List: async function (space: string) {
+            return await client.get(`/${space}/environments/all`);
         }
     },
 
