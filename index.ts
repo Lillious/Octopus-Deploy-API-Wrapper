@@ -150,7 +150,6 @@ const Octopus = {
         },
         Find: async function (id: string) {
             if (!id) throw new Error("id is required");
-            console.log(`/tasks/${id}`);
             return await client.get(`/tasks/${id}`);
         }
     },
