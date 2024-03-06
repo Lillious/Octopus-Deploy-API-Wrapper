@@ -12,6 +12,10 @@ jobs:
         with:
           version: '*'
 
+      - name: Echo URL
+        run: |
+          echo ${{ secrets.OCTOPUS_URL }}
+
       - name: List Deployment Targets
         id: deployment-targets
         env:
