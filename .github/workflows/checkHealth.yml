@@ -14,11 +14,11 @@ jobs:
         with:
           version: '*'
 
-      - name: Validate Secrets
+      - name: Unable to Locate Secrets
         env:
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
           OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
-        if: ${{ env.OCTOPUS_API_KEY == '' || env.OCTOPUS_URL == ''}}
+        if: ${{ !env.OCTOPUS_API_KEY || !env.OCTOPUS_URL }}
         run: >
           echo "Required secrets were not found!"
           exit 1
