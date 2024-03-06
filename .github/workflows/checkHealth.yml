@@ -10,15 +10,13 @@ jobs:
     environment: production
     steps:
       - name: Install Octopus CLI 🐙
-        # uses: OctopusDeploy/install-octopus-cli-action@v3
-        uses: MudraR/cli@main
+        uses: OctopusDeploy/install-octopus-cli-action@v3.1.1
         with:
           version: '*'
-
-      - name: List Accounts🐙
+      - name: list-octopusdeploy-accounts
         env:
-          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
           OCTOPUS_SPACE: 'Spaces-1'
         run: >
           octopus account list
