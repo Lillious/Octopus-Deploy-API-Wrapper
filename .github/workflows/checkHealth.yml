@@ -3,9 +3,11 @@ name: Check Connection Health 🐙
 on:
   workflow_dispatch
 
+
 jobs:
   check-connection-health:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Install Octopus CLI 🐙
         uses: OctopusDeploy/install-octopus-cli-action@v3.1.1
