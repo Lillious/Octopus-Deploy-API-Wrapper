@@ -14,17 +14,23 @@ jobs:
         with:
           version: '*'
 
-      - name: Echo URL
+      - name: Validate Secrets
+        env:
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+        if: ${{ env.OCTOPUS_API_KEY == '' || env.OCTOPUS_URL == ''}}
         run: >
-          echo "Secret: ${{ secrets.OCTOPUS_URL }}"
+          echo "Required secrets were not found!"
+          exit 1
+        
+      - name: Login to Octopus 🐙
+        env:
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+          OCTOPUS_SPACE: 'Spaces-1'
+        run: >
+          octopus login
           
-      # - name: Login to Octopus 🐙
-      #   env:
-      #     OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-      #     OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
-      #     OCTOPUS_SPACE: 'Spaces-1'
-      #   run: >
-      #     octopus login
       # - name: List Accounts 🐙
       #   run: >
       #     octopus account list
