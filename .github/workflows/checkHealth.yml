@@ -1,20 +1,29 @@
-name: Check Machine Health 🐙
+name: Check Connection Health 🐙
 
 on:
   workflow_dispatch
-  
+
+env:
+  OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+  OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+  OCTOPUS_SPACE: 'Default'
+
 jobs:
-  CheckMachineHealth:
+  CheckConnectionHealth:
     runs-on: ubuntu-latest
-    environment: production
+    outputs:
+      matrix: ${{ steps.set-deployment-targets.matrix }}
+    strategy:
+      matrix: ${{ fromJSON(needs.CheckConnectionHealth.outputs.matrix) }}
     steps:
-      - name: Get Deployment Targets
-        id: deploymentTargets
-        uses: fjogeleit/http-request-action@v1.15.2
-        with:
-          url: '${{ secrets.baseAPIURL }}/machines'
-          customHeaders: '{"Content-Type": "application/json", "X-Octopus-ApiKey": "${{ secrets.OctopusAPIKey }}"}'
-          method: get
-      - name: Response
+      - name: Install Octopus CLI
+        uses: OctopusDeploy/install-octopus-cli-action@v3
+        
+      - name: Set Deployment Targets 🐙
+      - id: set-deployment-targets
+        run: echo "matrix=octopus deployment-target list --output-format json >> $GITHUB_OUTPUT"
+
+      - name: Process Deployment Targets
         run: |
-          echo ${{ steps.deploymentTargets.outputs.response }}
+          targets_json=$(cat $GITHUB_OUTPUT)
+          echo "$targets_json" | jq -c '.[]'
