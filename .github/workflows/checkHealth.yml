@@ -20,7 +20,7 @@ jobs:
         uses: OctopusDeploy/install-octopus-cli-action@v3
         
       - name: Set Deployment Targets 🐙
-      - id: set-deployment-targets
+        id: set-deployment-targets
         run: echo "matrix=octopus deployment-target list --output-format json >> $GITHUB_OUTPUT"
 
       - name: Process Deployment Targets
