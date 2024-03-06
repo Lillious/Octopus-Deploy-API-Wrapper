@@ -12,10 +12,6 @@ jobs:
         with:
           version: '*'
 
-      - name: Echo URL
-        run: |
-          echo ${{ secrets.OCTOPUS_URL }}
-
       - name: List Deployment Targets
         id: deployment-targets
         env:
@@ -23,9 +19,9 @@ jobs:
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
           OCTOPUS_SPACE: 'Default'
         run: >
-          echo "::set-output name=targets::$(octopus deployment-target list --outputFormat=json)"
+          echo octopus deployment-target list --outputFormat=json
 
-      - name: Process Deployment Targets
-        run: |
-          targets_json="${{ steps.deployment-targets.outputs.targets }}"
-          echo "$targets_json" | jq -r '.[] | .Name, .Id, .EnvironmentIds'
+      # - name: Process Deployment Targets
+      #   run: |
+      #     targets_json="${{ steps.deployment-targets.outputs.targets }}"
+      #     echo "$targets_json" | jq -r '.[] | .Name, .Id, .EnvironmentIds'
