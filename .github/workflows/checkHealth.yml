@@ -8,20 +8,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Octopus CLI 🐙
-        uses: OctopusDeploy/install-octopus-cli-action@v3
+        uses: OctopusDeploy/install-octopus-cli-action@v3.1.1
 
-      - name: Login to Octopus CLI 🐙
-        run: >
-          echo octopus
-      
       - name: List Deployment Targets🐙
         id: deployment-targets
         env:
           OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-          OCTOPUS_SPACE: 'Default'
+          OCTOPUS_SPACE: 'Spaces-1'
         run: >
           octopus deployment-target list --output-format json
+      
+      # - name: List Deployment Targets🐙
+      #   id: deployment-targets
+      #   env:
+      #     OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+      #     OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+      #     OCTOPUS_SPACE: 'Default'
+      #   run: >
+      #     octopus deployment-target list --output-format json
 
       # - name: Process Deployment Targets
       #   run: |
