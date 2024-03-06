@@ -10,16 +10,17 @@ jobs:
     environment: production
     steps:
       - name: Install Octopus CLI 🐙
-        uses: OctopusDeploy/install-octopus-cli-action@v3.1.1
+        uses: OctopusDeploy/install-octopus-cli-action@v3
+        with:
+          version: '*'
 
-      - name: List Deployment Targets🐙
-        id: deployment-targets
+      - name: List Accounts🐙
         env:
           OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
           OCTOPUS_SPACE: 'Spaces-1'
         run: >
-          octopus deployment-target list --output-format json
+          octopus account list
       
       # - name: List Deployment Targets🐙
       #   id: deployment-targets
