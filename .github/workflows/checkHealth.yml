@@ -19,7 +19,7 @@ jobs:
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
           OCTOPUS_SPACE: 'Default'
         run: >
-          echo octopus deployment-target list --outputFormat=json
+          octopus deployment-target list --output-format json
 
       # - name: Process Deployment Targets
       #   run: |
