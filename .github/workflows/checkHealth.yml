@@ -9,10 +9,12 @@ jobs:
     steps:
       - name: Install Octopus CLI 🐙
         uses: OctopusDeploy/install-octopus-cli-action@v3
-        with:
-          version: '*'
 
-      - name: List Deployment Targets
+      - name: Login to Octopus CLI 🐙
+        uses: OctopusDeploy/install-octopus-cli-action@v3
+        
+      
+      - name: List Deployment Targets🐙
         id: deployment-targets
         env:
           OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
