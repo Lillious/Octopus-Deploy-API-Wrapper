@@ -11,8 +11,7 @@ jobs:
         uses: OctopusDeploy/install-octopus-cli-action@v3
 
       - name: Login to Octopus CLI 🐙
-        uses: OctopusDeploy/install-octopus-cli-action@v3
-        
+        run: octopus
       
       - name: List Deployment Targets🐙
         id: deployment-targets
