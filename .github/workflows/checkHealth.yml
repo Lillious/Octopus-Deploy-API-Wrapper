@@ -1,0 +1,20 @@
+name: Check Machine Health 🐙
+
+on:
+  workflow_dispatch
+  
+jobs:
+  CheckMachineHealth:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Get Deployment Targets
+        id: deploymentTargets
+        uses: fjogeleit/http-request-action@v1.15.2
+        with:
+          url: '${{ secrets.baseAPIURL }}/machines'
+          customHeaders: '{"Content-Type": "application/json", "X-Octopus-ApiKey": "${{ secrets.OctopusAPIKey }}"}'
+          method: get
+      - name: Response
+        run: |
+          echo ${{ steps.deploymentTargets.outputs.response }}
