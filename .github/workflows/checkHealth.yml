@@ -20,7 +20,7 @@ jobs:
           OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
           OCTOPUS_SPACE: 'Spaces-1'
         run: >
-          octopus login --api-key ${{ secrets.OCTOPUS_API_KEY }} --space 'Spaces-1' --server ${{ secrets.OCTOPUS_URL }} --output-format json
+          octopus login
       # - name: List Accounts 🐙
       #   run: >
       #     octopus account list
