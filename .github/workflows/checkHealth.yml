@@ -10,7 +10,8 @@ jobs:
     environment: production
     steps:
       - name: Install Octopus CLI 🐙
-        uses: OctopusDeploy/install-octopus-cli-action@v3
+        # uses: OctopusDeploy/install-octopus-cli-action@v3
+        uses: MudraR/cli@main
         with:
           version: '*'
 
