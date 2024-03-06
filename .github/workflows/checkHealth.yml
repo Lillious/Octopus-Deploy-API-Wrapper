@@ -13,14 +13,18 @@ jobs:
         uses: OctopusDeploy/install-octopus-cli-action@v3.1.1
         with:
           version: '*'
-          
-      - name: Login to Octopus 🐙
-        env:
-          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
-          OCTOPUS_SPACE: 'Spaces-1'
+
+      - name: Echo URL
         run: >
-          octopus login
+          echo "Secret: ${{ secrets.OCTOPUS_URL }}"
+          
+      # - name: Login to Octopus 🐙
+      #   env:
+      #     OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+      #     OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+      #     OCTOPUS_SPACE: 'Spaces-1'
+      #   run: >
+      #     octopus login
       # - name: List Accounts 🐙
       #   run: >
       #     octopus account list
