@@ -3,27 +3,25 @@ name: Check Connection Health 🐙
 on:
   workflow_dispatch
 
-env:
-  OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
-  OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-  OCTOPUS_SPACE: 'Default'
-
 jobs:
-  CheckConnectionHealth:
+  check-connection-health:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-deployment-targets.matrix }}
-    strategy:
-      matrix: ${{ fromJSON(needs.CheckConnectionHealth.outputs.matrix) }}
     steps:
-      - name: Install Octopus CLI
+      - name: Install Octopus CLI 🐙
         uses: OctopusDeploy/install-octopus-cli-action@v3
-        
-      - name: Set Deployment Targets 🐙
-        id: set-deployment-targets
-        run: echo "matrix=octopus deployment-target list --output-format json >> $GITHUB_OUTPUT"
+        with:
+          version: '*'
+
+      - name: List Deployment Targets
+        id: deployment-targets
+        env:
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_SPACE: 'Default'
+        run: >
+          echo "::set-output name=targets::$(octopus deployment-target list --outputFormat=json)"
 
       - name: Process Deployment Targets
         run: |
-          targets_json=$(cat $GITHUB_OUTPUT)
-          echo "$targets_json" | jq -c '.[]'
+          targets_json="${{ steps.deployment-targets.outputs.targets }}"
+          echo "$targets_json" | jq -r '.[] | .Name, .Id, .EnvironmentIds'
