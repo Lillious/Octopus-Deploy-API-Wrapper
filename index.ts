@@ -97,6 +97,11 @@ const Octopus = {
         Create: async function (deployment: any) {
             if (!deployment) throw new Error("deployment is required");
             return await client.post("/deployments", deployment);
+        },
+        FindByEnvironment: async function (projectId: string, environmentId: string, amount = 1) {
+            if (!projectId) throw new Error("projectId is required");
+            if (!environmentId) throw new Error("environmentId is required");
+            return await client.get(`/deployments?projects=${projectId}&environments=${environmentId}&take=${amount}`);
         }
     },
 
@@ -161,6 +166,12 @@ const Octopus = {
         Find: async function (space: string, id: string) {
             return await client.get(`/${space}/environments/${id}`);
         },
+        FindByName: async function (space: string, name: string) {
+            const environments = await client.get(`/${space}/environments?name=${encodeURIComponent(name)}`);
+            // Return only the perfect match
+            const environment = environments.Items.find((env: any) => env.Name === name) || null;
+            return environment;
+        }
     },
 
     Event: {
@@ -188,7 +199,38 @@ const Octopus = {
             if (!id) throw new Error("id is required");
             return await client.get(`/machines/${id}/connection`);
         }
+    },
+
+    Project: {
+        Find: async function (space: string, id: string) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/${space}/projects/${id}`);
+        },
+        List: async function (space: string) {
+            return await client.get(`/${space}/projects/all`);
+        },
+        Releases: async function (projectId: string) {
+            if (!projectId) throw new Error("projectId is required");
+            return await client.get(`/projects/${projectId}/releases`);
+        }
+    },
+
+    Groups: {
+        List: async function () {
+            return await client.get("/projectgroups");
+        },
+        Projects: async function (groupId: string, amount: number = 30) {
+            if (!groupId) throw new Error("groupId is required");
+            return await client.get(`/projectgroups/${groupId}/projects?take=${amount}`);
+        }
+    },
+
+    Release: {
+        Find: async function (id: string, amount: number = 30) {
+            if (!id) throw new Error("id is required");
+            return await client.get(`/releases/${id}?take=${amount}`);
+        }
     }
-}
+};
 
 export default Octopus;
